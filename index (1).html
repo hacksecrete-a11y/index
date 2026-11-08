@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d11">
+<title>STALKERWARE XE1 — Demo</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0; padding: 20px; background: #f4f6f9;
+    font-family: Arial, sans-serif; color: #222;
+}
+.container {
+    max-width: 440px; margin: 35px auto; padding: 28px 22px;
+    background: white; border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08); text-align: center;
+}
+.icon { font-size: 42px; margin-bottom: 15px; }
+h2 { font-size: 23px; margin: 0 0 15px; }
+p { font-size: 15px; line-height: 1.7; color: #555; }
+.reference {
+    font-size: 27px; font-weight: bold; letter-spacing: 2px;
+    margin: 25px 0; color: #222;
+}
+button {
+    width: 100%; padding: 15px; border: 0; border-radius: 7px;
+    background: #1769d2; color: white; font-size: 15px;
+    cursor: pointer; margin-top: 20px;
+}
+button:hover { background: #1055ae; }
+button:focus-visible { outline: 3px solid #8bbcff; outline-offset: 3px; }
+.notice {
+    background: #fff6df; padding: 15px; border-radius: 8px;
+    margin-top: 20px; color: #74551a;
+}
+.brand-label {
+    font-size: 12px; letter-spacing: 1px; color: #888;
+    margin-bottom: 20px;
+}
+.page { display: none; }
+.page.active { display: block; animation: pageIn .28s ease-out; }
+.demo-note {
+    margin-top: 15px; font-size: 11px; color: #6c777d;
+    line-height: 1.5;
+}
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animated database demonstration */
+.database-dashboard {
+    width: 100%; background: #050709; color: #e8eeee;
+    font-family: Arial, sans-serif; text-align: left;
+    border-radius: 9px; overflow: hidden;
+    border: 1px solid #26343b;
+    box-shadow: 0 0 25px rgba(255,0,0,.15);
+}
+.database-dashboard * { box-sizing: border-box; }
+.db-header {
+    background: #111a20; padding: 20px 15px;
+    border-bottom: 1px solid #26343b;
+}
+.db-header h2 {
+    color: #ff3030; font-size: 17px; letter-spacing: 2px; margin: 0;
+}
+.db-header p {
+    color: #9aaab1; font-size: 10px; margin: 8px 0 0;
+    letter-spacing: 1px;
+}
+.db-scanner {
+    height: 2px; width: 100%; transform-origin: left;
+    background: #ff2020; box-shadow: 0 0 12px red;
+    animation: dbscan 2s ease-in-out infinite;
+}
+.db-content { padding: 15px; }
+.db-target {
+    background: #101a20; padding: 16px;
+    border-left: 3px solid #ff3030; margin-bottom: 18px;
+    animation: dbglow 3s infinite;
+}
+.db-label {
+    font-size: 10px; color: #a6b5bc; letter-spacing: 1.5px;
+}
+.db-number {
+    font-size: 22px; margin-top: 10px; color: white;
+    letter-spacing: 2px;
+}
+.db-status {
+    color: #ff5555; font-size: 10px; margin-top: 10px;
+    animation: dbblink 1s infinite;
+}
+.db-section {
+    background: #10171d; border: 1px solid #243139;
+    padding: 14px; margin-bottom: 15px; border-radius: 6px;
+}
+.db-section-title {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 5px; margin-bottom: 15px;
+}
+.db-section-title h3 {
+    font-size: 12px; letter-spacing: 1px; color: white; margin: 0;
+}
+.db-indicator {
+    color: #ff5555; font-size: 9px; animation: dbblink .8s infinite;
+}
+.db-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid #202b32;
+    font-size: 10px; gap: 10px;
+}
+.db-row:last-child { border-bottom: 0; }
+.db-data-label { color: #a3b1b8; }
+.db-blur {
+    filter: blur(5px); color: #ff7777; user-select: none;
+    transition: filter .4s;
+}
+.db-blur:hover { filter: blur(7px); }
+.db-warning {
+    color: #ff6666; font-size: 9px; line-height: 1.6;
+    animation: dbblink 1s infinite;
+}
+.db-footer {
+    padding: 14px 10px; background: #080d11;
+    border-top: 1px solid #26343b; display: flex;
+    justify-content: space-between; flex-wrap: wrap; gap: 7px;
+    font-size: 8px; color: #a0adb3; letter-spacing: 1px;
+}
+.db-simulation { color: #ff7777; font-weight: bold; }
+.access-panel {
+    padding: 30px 18px; text-align: center;
+}
+.access-icon { font-size: 54px; margin-bottom: 18px; }
+.access-panel h2 {
+    color: #ff4545; letter-spacing: 2px; font-size: 21px;
+}
+.access-message {
+    color: #ff6666; font-size: 14px; font-weight: bold;
+}
+@keyframes dbblink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .2; }
+}
+@keyframes dbscan {
+    0% { opacity: .2; transform: scaleX(.15); }
+    50% { opacity: 1; transform: scaleX(1); }
+    100% { opacity: .2; transform: scaleX(.15); }
+}
+@keyframes dbglow {
+    0%, 100% { box-shadow: 0 0 8px rgba(255,0,0,.1); }
+    50% { box-shadow: 0 0 22px rgba(255,0,0,.3); }
+}
+@media (max-width: 600px) {
+    .container { margin: 10px auto; padding: 22px 15px; }
+    .db-content { padding: 11px; }
+    .db-section { padding: 11px; }
+    .db-number { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+<body>
+<main class="container">
+    <div class="brand-label">STALKERWARE XE1 — DEMONSTRATION</div>
+
+    <!-- PAGE 1 -->
+    <section class="page active" id="page1">
+        <div class="icon">📍</div>
+        <h2>Activities and Location</h2>
+        <p>You have reached the activities and location section of STALKERWARE.</p>
+        <p>No personal activities or location data have been collected.</p>
+        <button type="button" onclick="nextPage(2)">Next</button>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="page" id="page2">
+        <div class="icon">🔢</div>
+        <h2>Target Reference Number</h2>
+        <p>Your demonstration reference number is:</p>
+        <div class="reference">64 204702648</div>
+        <p>This is a reference identifier only. It does not identify or verify a connected device.</p>
+        <button type="button" onclick="nextPage(3)">Next</button>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section class="page" id="page3">
+        <div class="icon">📊</div>
+        <h2>Target Activities</h2>
+        <p>Target activities and private location information are available.</p>
+        <div class="notice">
+            DEMONSTRATION NOTICE: This interface contains sample content only.
+            No actual private activities or location records are collected or accessed.
+        </div>
+        <button type="button" onclick="nextPage(4)">Next</button>
+    </section>
+
+    <!-- PAGE 4 -->
+    <section class="page" id="page4">
+        <div class="icon">🌐</div>
+        <h2>New Zealand Access Notice</h2>
+        <p>STALKERWARE XE1 includes a simulated regional restriction notice for New Zealand.</p>
+        <div class="notice">No actual regional restriction has been applied.</div>
+        <button type="button" onclick="nextPage(5)">Next</button>
+    </section>
+
+    <!-- PAGE 5 -->
+    <section class="page" id="page5">
+        <div class="icon">💳</div>
+        <h2>Subscription Information</h2>
+        <p>The displayed illustrative subscription amount is:</p>
+        <div class="reference">200 NZD</div>
+        <p>No payment will be requested or processed.</p>
+        <button type="button" onclick="nextPage(6)">Next</button>
+    </section>
+
+    <!-- PAGE 6 -->
+    <section class="page" id="page6">
+        <div class="icon">⚙️</div>
+        <h2>Administrator Assistance</h2>
+        <p>You have reached the administrator assistance page.</p>
+        <div class="notice">Completed</div>
+        <button type="button" onclick="nextPage(7)">Open Database Monitoring</button>
+    </section>
+
+    <!-- PAGE 7: ANIMATED DATABASE DEMO -->
+    <section class="page" id="page7">
+        <div class="database-dashboard">
+            <div class="db-header">
+                <h2>DATABASE MONITORING</h2>
+                <p>SECURE RECORD MONITORING INTERFACE — DEMO</p>
+            </div>
+            <div class="db-scanner"></div>
+            <div class="db-content">
+                <div class="db-target">
+                    <div class="db-label">TARGET REFERENCE NUMBER</div>
+                    <div class="db-number">64 204702648</div>
+                    <div class="db-status">● SIMULATED DATABASE CONNECTION</div>
+                </div>
+
+                <div class="db-section">
+                    <div class="db-section-title">
+                        <h3>LOCATION RECORDS</h3>
+                        <span class="db-indicator">● RESTRICTED</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Location Status</span>
+                        <span class="db-warning">● SAMPLE RECORD</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Geographical Data</span>
+                        <span class="db-blur">Sample Location Data</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Coordinates</span>
+                        <span class="db-blur">00.0000 / 00.0000</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Location Details</span>
+                        <span class="db-blur">Sample Records</span>
+                    </div>
+                </div>
+
+                <div class="db-section">
+                    <div class="db-section-title">
+                        <h3>CALL LOGS</h3>
+                        <span class="db-indicator">● RESTRICTED</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Incoming Calls</span>
+                        <span class="db-blur">+000 000 0000</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Outgoing Calls</span>
+                        <span class="db-blur">+000 000 0000</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Call History</span>
+                        <span class="db-blur">Sample Call Records</span>
+                    </div>
+                    <div class="db-row">
+                        <span class="db-data-label">Call Duration</span>
+                        <span class="db-blur">00:00:00</span>
+                    </div>
+                </div>
+
+                <div class="db-warning">
+                    ● ALL LOCATION AND CALL-LOG ENTRIES ARE FICTIONAL DEMO DATA.
+                    NO PRIVATE RECORDS ARE RETRIEVED.
+                </div>
+            </div>
+            <div class="db-footer">
+                <span>DATABASE INTERFACE</span>
+                <span class="db-simulation">SIMULATION MODE</span>
+                <span>● ANIMATION ACTIVE</span>
+            </div>
+        </div>
+
+        <button type="button" onclick="nextPage(8)">
+            Click to view target full location and activities
+        </button>
+        <p class="demo-note">The button opens a simulated access-restriction screen.</p>
+    </section>
+
+    <!-- PAGE 8: ACCESS BLOCKED -->
+    <section class="page" id="page8">
+        <div class="database-dashboard">
+            <div class="db-header">
+                <h2>SECURITY GATEWAY</h2>
+                <p>DEMONSTRATION ACCESS CONTROL</p>
+            </div>
+            <div class="db-scanner"></div>
+            <div class="access-panel">
+                <div class="access-icon">🔒</div>
+                <h2>ACCESS BLOCKED</h2>
+                <p class="access-message">ACCESS BLOCKED — CONTACT ADMIN</p>
+                <div class="db-section">
+                    <div class="db-status">● SIMULATED SECURITY RESTRICTION</div>
+                    <p style="color:#a5b2b9;margin-top:15px;">
+                        This demonstration does not retrieve, reveal, or expose
+                        actual private location or activity information.
+                    </p>
+                </div>
+                <button type="button" onclick="nextPage(1)">Return to Main Page</button>
+            </div>
+            <div class="db-footer">
+                <span>SECURITY GATEWAY</span>
+                <span class="db-simulation">SIMULATION MODE</span>
+                <span>● DEMO</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+function nextPage(number) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    const next = document.getElementById("page" + number);
+    if (next) {
+        next.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+}
+</script>
+</body>
+</html>
